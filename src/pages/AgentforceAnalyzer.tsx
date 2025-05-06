@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,12 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Chart,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent
-} from "@/components/ui/chart";
 import { 
   LineChart, 
   Line, 
@@ -82,9 +75,9 @@ const AgentforceAnalyzer = () => {
         </p>
       </div>
 
-      {/* Filters and Inputs */}
+      {/* Simplified Filters and Inputs */}
       <div className="bg-white rounded-lg p-6 shadow-sm mb-6 border">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Time Range</label>
             <div className="flex items-center space-x-2">
@@ -92,72 +85,9 @@ const AgentforceAnalyzer = () => {
               <Input type="text" placeholder="2025-05-06 08:00:00 - 2025-05-06 09:00:00" className="w-full" />
             </div>
           </div>
-          
-          <div>
-            <label className="block text-sm font-medium mb-1">Pod</label>
-            <div className="flex items-center space-x-2">
-              <Database className="h-4 w-4 text-muted-foreground" />
-              <Input type="text" placeholder="AP48" className="w-full" />
-            </div>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium mb-1">Org ID</label>
-            <div className="flex items-center space-x-2">
-              <Database className="h-4 w-4 text-muted-foreground" />
-              <Input type="text" placeholder="00D300000000ZLA" className="w-full" />
-            </div>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium mb-1">Analysis Type</label>
-            <div className="flex items-center space-x-2">
-              <div className="flex items-center space-x-2 mt-1">
-                <input type="radio" id="db-analysis" name="analysis-type" checked />
-                <label htmlFor="db-analysis">DB Analysis</label>
-              </div>
-              <div className="flex items-center space-x-2 mt-1">
-                <input type="radio" id="splunk-analysis" name="analysis-type" />
-                <label htmlFor="splunk-analysis">Splunk Analysis</label>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-5 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Analyze By Metric</label>
-            <div className="flex items-center space-x-2">
-              <input type="radio" id="db-cpu-time" name="metric" checked />
-              <label htmlFor="db-cpu-time">DB CPU Time</label>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-2 mt-7">
-            <input type="radio" id="run-time" name="metric" />
-            <label htmlFor="run-time">Run Time</label>
-          </div>
-          
-          <div className="flex items-center space-x-2 mt-7">
-            <input type="radio" id="db-time" name="metric" />
-            <label htmlFor="db-time">DB Time</label>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium mb-1">CPU Trend</label>
-            <Select defaultValue="30">
-              <SelectTrigger>
-                <SelectValue placeholder="Select days" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="30">30 days</SelectItem>
-                <SelectItem value="60">60 days</SelectItem>
-                <SelectItem value="90">90 days</SelectItem>
-                <SelectItem value="110">110 days</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
+        <div className="mt-4 grid grid-cols-1 gap-4">
           <div className="flex justify-end items-end">
             <Button className="bg-blue-500 hover:bg-blue-600">
               Submit
@@ -170,7 +100,7 @@ const AgentforceAnalyzer = () => {
       <div className="bg-white rounded-lg shadow-sm mb-6 border">
         <div className="p-4 border-b flex justify-between items-center">
           <div className="flex items-center">
-            <h2 className="text-lg font-semibold">00D300000000ZLA - AgentForce Analysis Results</h2>
+            <h2 className="text-lg font-semibold">AgentForce Analysis Results</h2>
           </div>
           <Button variant="outline">
             Download Report
