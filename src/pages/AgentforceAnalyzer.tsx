@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -21,11 +20,24 @@ import {
   BarChart,
   Bar
 } from "recharts";
-import { Check, Clock, Database, Info, Search, ArrowRight } from "lucide-react";
+import { 
+  Check, 
+  Clock, 
+  Database, 
+  Info, 
+  Search, 
+  ArrowRight, 
+  AlertTriangle,
+  ExternalLink,
+  FileText,
+  Activity
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 const AgentforceAnalyzer = () => {
   const [timeRange, setTimeRange] = useState("30");
   const [selectedTab, setSelectedTab] = useState("overview");
+  const [agentId, setAgentId] = useState("");
 
   // Sample data for server metrics chart
   const serverMetricsData = [
@@ -103,11 +115,29 @@ const AgentforceAnalyzer = () => {
     { normalizedMessage: "<sse.event.send> error sending event - eventSink is already closed! : X sse_event_name=STREAM_CHUNK_MESSAGE sse__data={", count: 2653.00 }
   ];
 
+  // Sample trace data
+  const traceData = {
+    steps: [
+      { timestamp: "2025-05-12 09:23:12", component: "BOT_WORKER", operation: "Session Initialization", durationMs: 45 },
+      { timestamp: "2025-05-12 09:23:12", component: "PLANNER", operation: "Plan Creation", durationMs: 1508 },
+      { timestamp: "2025-05-12 09:23:14", component: "LLM_GATEWAY", operation: "/v1/chat/completions", durationMs: 8396 },
+      { timestamp: "2025-05-12 09:23:22", component: "APEX_EXECUTOR", operation: "QueryRecords", durationMs: 218 },
+      { timestamp: "2025-05-12 09:23:23", component: "DATA_FETCHER", operation: "Entity Lookup", durationMs: 156 },
+      { timestamp: "2025-05-12 09:23:23", component: "LLM_GATEWAY", operation: "/v1/chat/completions", durationMs: 7845 },
+    ]
+  };
+
+  const handleGenerateTrace = () => {
+    // In a real implementation, this would make an API call with the agentId
+    console.log("Generating trace for agent ID:", agentId);
+    // For now, we'll just show the sample trace data that's already defined
+  };
+
   return (
     <div className="container mx-auto p-4 max-w-7xl">
       {/* Header Section */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">AgentForce Issue Triaging</h1>
+        <h1 className="text-3xl font-bold mb-2">AgentForce Performance Analysis</h1>
         <p className="text-muted-foreground">
           Performance metrics and insights for troubleshooting AgentForce runtime issues
         </p>
@@ -170,7 +200,7 @@ const AgentforceAnalyzer = () => {
                 </Card>
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-medium">Server Utilization</CardTitle>
+                    <CardTitle className="text-sm font-medium">Database Utilization</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">67%</div>
@@ -180,17 +210,226 @@ const AgentforceAnalyzer = () => {
                 </Card>
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-medium">Errors & Exceptions</CardTitle>
+                    <CardTitle className="text-sm font-medium">App Utilization</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">47</div>
+                    <div className="text-2xl font-bold">47%</div>
                     <p className="text-xs text-muted-foreground">-3% from previous period</p>
                     <Progress value={47} className="h-1 mt-2" />
                   </CardContent>
                 </Card>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Key Takeaways Section */}
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Info className="h-5 w-5 mr-2 text-blue-500" />
+                    Key Takeaways
+                  </CardTitle>
+                  <CardDescription>Critical insights from your performance analysis</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="p-4 bg-amber-50 border border-amber-200 rounded-md">
+                    <div className="flex items-start">
+                      <AlertTriangle className="h-5 w-5 text-amber-500 mr-2 mt-0.5" />
+                      <div>
+                        <h3 className="font-semibold text-amber-800">Performance Bottleneck Identified</h3>
+                        <p className="text-sm text-amber-700 mt-1">
+                          <strong>SalesCoachAgent</strong> is identified as the slowest agent type with an average response time of <strong>8396ms</strong>. 
+                          The biggest contributor is database time caused by <strong>SOQL_EXECUTE_BEGIN</strong> wait event.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-start">
+                      <Check className="h-4 w-4 text-green-600 mr-2 mt-0.5" />
+                      <p className="text-sm">Database CPU utilization is at <strong>40%</strong> during the analyzed period, which is leading to slow performance.</p>
+                    </div>
+                    <div className="flex items-start">
+                      <Check className="h-4 w-4 text-green-600 mr-2 mt-0.5" />
+                      <p className="text-sm"><strong>EmployeeCopilot__IdentifyRecordsByName</strong> action has a significantly higher p90 duration (55855.50ms) compared to other actions.</p>
+                    </div>
+                    <div className="flex items-start">
+                      <Check className="h-4 w-4 text-green-600 mr-2 mt-0.5" />
+                      <p className="text-sm">LLM Gateway callouts to <strong>/v1/chat/completions</strong> have consistently high latency (avg. 8396ms), impacting overall response times.</p>
+                    </div>
+                    <div className="flex items-start">
+                      <Check className="h-4 w-4 text-green-600 mr-2 mt-0.5" />
+                      <p className="text-sm">A significant number of <strong>Session not found</strong> errors (7022) indicate potential issues with session management.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 pt-4 border-t">
+                    <Link to="/org-analyzer">
+                      <Button variant="outline" className="text-blue-600">
+                        For more detailed insight, run Org Analyzer report <ExternalLink className="h-3.5 w-3.5 ml-1" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Org DB Insights Section */}
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Database className="h-5 w-5 mr-2 text-purple-500" />
+                    Org DB Insights
+                  </CardTitle>
+                  <CardDescription>Database performance summary from Org Analyzer</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div className="p-4 border rounded-md">
+                      <h3 className="font-semibold mb-2">Database Performance</h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">CPU Usage</span>
+                          <span className="font-medium">38%</span>
+                        </div>
+                        <Progress value={38} className="h-1.5" />
+                        
+                        <div className="flex justify-between mt-3">
+                          <span className="text-sm text-muted-foreground">IO Throughput</span>
+                          <span className="font-medium">126 MB/s</span>
+                        </div>
+                        <Progress value={62} className="h-1.5" />
+                        
+                        <div className="flex justify-between mt-3">
+                          <span className="text-sm text-muted-foreground">Query Execution Time</span>
+                          <span className="font-medium">218ms (avg)</span>
+                        </div>
+                        <Progress value={45} className="h-1.5" />
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 border rounded-md">
+                      <h3 className="font-semibold mb-2">Top Wait Events</h3>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className="h-3 w-3 rounded-full bg-red-500 mr-2"></div>
+                            <span className="text-sm">SOQL_EXECUTE_BEGIN</span>
+                          </div>
+                          <span className="text-sm font-medium">42%</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className="h-3 w-3 rounded-full bg-amber-500 mr-2"></div>
+                            <span className="text-sm">DB_CPU</span>
+                          </div>
+                          <span className="text-sm font-medium">28%</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className="h-3 w-3 rounded-full bg-green-500 mr-2"></div>
+                            <span className="text-sm">IO_READ</span>
+                          </div>
+                          <span className="text-sm font-medium">15%</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className="h-3 w-3 rounded-full bg-blue-500 mr-2"></div>
+                            <span className="text-sm">LOG_FILE_SYNC</span>
+                          </div>
+                          <span className="text-sm font-medium">9%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-center mt-2">
+                    <Link to="/org-analyzer">
+                      <Button className="bg-purple-600 hover:bg-purple-700">
+                        View Full Org Analyzer <ExternalLink className="ml-1 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Deep-Dive Trace Section */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Activity className="h-5 w-5 mr-2 text-indigo-500" />
+                    Deep-Dive Trace Analysis
+                  </CardTitle>
+                  <CardDescription>Generate detailed execution path for specific agent ID</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-end gap-4 mb-6">
+                    <div className="flex-1">
+                      <label className="block text-sm font-medium mb-1">Agent ID</label>
+                      <Input 
+                        type="text" 
+                        placeholder="Enter agent ID (e.g., 0Xx7100000CmsXYZAZ)" 
+                        value={agentId} 
+                        onChange={(e) => setAgentId(e.target.value)}
+                      />
+                    </div>
+                    <Button onClick={handleGenerateTrace}>
+                      Generate Trace
+                    </Button>
+                  </div>
+                  
+                  {agentId && (
+                    <>
+                      <h3 className="text-sm font-semibold mb-3">Execution Trace for Agent: {agentId}</h3>
+                      <div className="relative overflow-x-auto border rounded-md">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Timestamp</TableHead>
+                              <TableHead>Component</TableHead>
+                              <TableHead>Operation</TableHead>
+                              <TableHead>Duration (ms)</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {traceData.steps.map((step, index) => (
+                              <TableRow key={index}>
+                                <TableCell className="font-mono text-xs">{step.timestamp}</TableCell>
+                                <TableCell>
+                                  <Badge variant="outline" className="font-mono">
+                                    {step.component}
+                                  </Badge>
+                                </TableCell>
+                                <TableCell>{step.operation}</TableCell>
+                                <TableCell>
+                                  <Badge className={step.durationMs > 1000 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}>
+                                    {step.durationMs}ms
+                                  </Badge>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </div>
+                      
+                      <div className="mt-4 p-4 bg-slate-50 rounded-md border">
+                        <div className="flex items-start">
+                          <FileText className="h-4 w-4 text-slate-600 mr-2 mt-0.5" />
+                          <div>
+                            <h4 className="text-sm font-medium">Analysis</h4>
+                            <p className="text-sm text-slate-600 mt-1">
+                              Two LLM Gateway calls are contributing to 84% of the total execution time. 
+                              The calls to <code className="px-1 py-0.5 bg-slate-100 rounded text-xs">/v1/chat/completions</code> are 
+                              taking significantly longer than expected. Consider optimizing prompt length or 
+                              implementing caching strategies.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </CardContent>
+              </Card>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <Card>
                   <CardHeader>
                     <CardTitle>Latency Trends</CardTitle>
@@ -216,7 +455,7 @@ const AgentforceAnalyzer = () => {
                 </Card>
                 <Card>
                   <CardHeader>
-                    <CardTitle>Server Utilization</CardTitle>
+                    <CardTitle>Resource Utilization</CardTitle>
                     <CardDescription>CPU and memory usage over time</CardDescription>
                   </CardHeader>
                   <CardContent>
