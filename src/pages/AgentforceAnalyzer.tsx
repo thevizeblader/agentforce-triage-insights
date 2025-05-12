@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -184,6 +185,8 @@ const AgentforceAnalyzer = () => {
               <TabsTrigger value="callouts">Gateway & Callouts</TabsTrigger>
               <TabsTrigger value="execution">Execution Times</TabsTrigger>
               <TabsTrigger value="errors">Errors & Exceptions</TabsTrigger>
+              <TabsTrigger value="orgdb">Org DB Insights</TabsTrigger>
+              <TabsTrigger value="trace">Deep-Dive Trace</TabsTrigger>
             </TabsList>
             
             <TabsContent value="overview">
@@ -269,163 +272,6 @@ const AgentforceAnalyzer = () => {
                       </Button>
                     </Link>
                   </div>
-                </CardContent>
-              </Card>
-              
-              {/* Org DB Insights Section */}
-              <Card className="mb-6">
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Database className="h-5 w-5 mr-2 text-purple-500" />
-                    Org DB Insights
-                  </CardTitle>
-                  <CardDescription>Database performance summary from Org Analyzer</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div className="p-4 border rounded-md">
-                      <h3 className="font-semibold mb-2">Database Performance</h3>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">CPU Usage</span>
-                          <span className="font-medium">38%</span>
-                        </div>
-                        <Progress value={38} className="h-1.5" />
-                        
-                        <div className="flex justify-between mt-3">
-                          <span className="text-sm text-muted-foreground">IO Throughput</span>
-                          <span className="font-medium">126 MB/s</span>
-                        </div>
-                        <Progress value={62} className="h-1.5" />
-                        
-                        <div className="flex justify-between mt-3">
-                          <span className="text-sm text-muted-foreground">Query Execution Time</span>
-                          <span className="font-medium">218ms (avg)</span>
-                        </div>
-                        <Progress value={45} className="h-1.5" />
-                      </div>
-                    </div>
-                    
-                    <div className="p-4 border rounded-md">
-                      <h3 className="font-semibold mb-2">Top Wait Events</h3>
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <div className="h-3 w-3 rounded-full bg-red-500 mr-2"></div>
-                            <span className="text-sm">SOQL_EXECUTE_BEGIN</span>
-                          </div>
-                          <span className="text-sm font-medium">42%</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <div className="h-3 w-3 rounded-full bg-amber-500 mr-2"></div>
-                            <span className="text-sm">DB_CPU</span>
-                          </div>
-                          <span className="text-sm font-medium">28%</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <div className="h-3 w-3 rounded-full bg-green-500 mr-2"></div>
-                            <span className="text-sm">IO_READ</span>
-                          </div>
-                          <span className="text-sm font-medium">15%</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <div className="h-3 w-3 rounded-full bg-blue-500 mr-2"></div>
-                            <span className="text-sm">LOG_FILE_SYNC</span>
-                          </div>
-                          <span className="text-sm font-medium">9%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-center mt-2">
-                    <Link to="/org-analyzer">
-                      <Button className="bg-purple-600 hover:bg-purple-700">
-                        View Full Org Analyzer <ExternalLink className="ml-1 h-4 w-4" />
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              {/* Deep-Dive Trace Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Activity className="h-5 w-5 mr-2 text-indigo-500" />
-                    Deep-Dive Trace Analysis
-                  </CardTitle>
-                  <CardDescription>Generate detailed execution path for specific agent ID</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-end gap-4 mb-6">
-                    <div className="flex-1">
-                      <label className="block text-sm font-medium mb-1">Agent ID</label>
-                      <Input 
-                        type="text" 
-                        placeholder="Enter agent ID (e.g., 0Xx7100000CmsXYZAZ)" 
-                        value={agentId} 
-                        onChange={(e) => setAgentId(e.target.value)}
-                      />
-                    </div>
-                    <Button onClick={handleGenerateTrace}>
-                      Generate Trace
-                    </Button>
-                  </div>
-                  
-                  {agentId && (
-                    <>
-                      <h3 className="text-sm font-semibold mb-3">Execution Trace for Agent: {agentId}</h3>
-                      <div className="relative overflow-x-auto border rounded-md">
-                        <Table>
-                          <TableHeader>
-                            <TableRow>
-                              <TableHead>Timestamp</TableHead>
-                              <TableHead>Component</TableHead>
-                              <TableHead>Operation</TableHead>
-                              <TableHead>Duration (ms)</TableHead>
-                            </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                            {traceData.steps.map((step, index) => (
-                              <TableRow key={index}>
-                                <TableCell className="font-mono text-xs">{step.timestamp}</TableCell>
-                                <TableCell>
-                                  <Badge variant="outline" className="font-mono">
-                                    {step.component}
-                                  </Badge>
-                                </TableCell>
-                                <TableCell>{step.operation}</TableCell>
-                                <TableCell>
-                                  <Badge className={step.durationMs > 1000 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}>
-                                    {step.durationMs}ms
-                                  </Badge>
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                      </div>
-                      
-                      <div className="mt-4 p-4 bg-slate-50 rounded-md border">
-                        <div className="flex items-start">
-                          <FileText className="h-4 w-4 text-slate-600 mr-2 mt-0.5" />
-                          <div>
-                            <h4 className="text-sm font-medium">Analysis</h4>
-                            <p className="text-sm text-slate-600 mt-1">
-                              Two LLM Gateway calls are contributing to 84% of the total execution time. 
-                              The calls to <code className="px-1 py-0.5 bg-slate-100 rounded text-xs">/v1/chat/completions</code> are 
-                              taking significantly longer than expected. Consider optimizing prompt length or 
-                              implementing caching strategies.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  )}
                 </CardContent>
               </Card>
               
@@ -768,6 +614,167 @@ const AgentforceAnalyzer = () => {
                       ))}
                     </div>
                   </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            {/* New Tab: Org DB Insights */}
+            <TabsContent value="orgdb">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Database className="h-5 w-5 mr-2 text-purple-500" />
+                    Org DB Insights
+                  </CardTitle>
+                  <CardDescription>Database performance summary from Org Analyzer</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div className="p-4 border rounded-md">
+                      <h3 className="font-semibold mb-2">Database Performance</h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">CPU Usage</span>
+                          <span className="font-medium">38%</span>
+                        </div>
+                        <Progress value={38} className="h-1.5" />
+                        
+                        <div className="flex justify-between mt-3">
+                          <span className="text-sm text-muted-foreground">IO Throughput</span>
+                          <span className="font-medium">126 MB/s</span>
+                        </div>
+                        <Progress value={62} className="h-1.5" />
+                        
+                        <div className="flex justify-between mt-3">
+                          <span className="text-sm text-muted-foreground">Query Execution Time</span>
+                          <span className="font-medium">218ms (avg)</span>
+                        </div>
+                        <Progress value={45} className="h-1.5" />
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 border rounded-md">
+                      <h3 className="font-semibold mb-2">Top Wait Events</h3>
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className="h-3 w-3 rounded-full bg-red-500 mr-2"></div>
+                            <span className="text-sm">SOQL_EXECUTE_BEGIN</span>
+                          </div>
+                          <span className="text-sm font-medium">42%</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className="h-3 w-3 rounded-full bg-amber-500 mr-2"></div>
+                            <span className="text-sm">DB_CPU</span>
+                          </div>
+                          <span className="text-sm font-medium">28%</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className="h-3 w-3 rounded-full bg-green-500 mr-2"></div>
+                            <span className="text-sm">IO_READ</span>
+                          </div>
+                          <span className="text-sm font-medium">15%</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className="h-3 w-3 rounded-full bg-blue-500 mr-2"></div>
+                            <span className="text-sm">LOG_FILE_SYNC</span>
+                          </div>
+                          <span className="text-sm font-medium">9%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-center mt-2">
+                    <Link to="/org-analyzer">
+                      <Button className="bg-purple-600 hover:bg-purple-700">
+                        View Full Org Analyzer <ExternalLink className="ml-1 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            
+            {/* New Tab: Deep-Dive Trace Analysis */}
+            <TabsContent value="trace">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Activity className="h-5 w-5 mr-2 text-indigo-500" />
+                    Deep-Dive Trace Analysis
+                  </CardTitle>
+                  <CardDescription>Generate detailed execution path for specific agent ID</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-end gap-4 mb-6">
+                    <div className="flex-1">
+                      <label className="block text-sm font-medium mb-1">Agent ID</label>
+                      <Input 
+                        type="text" 
+                        placeholder="Enter agent ID (e.g., 0Xx7100000CmsXYZAZ)" 
+                        value={agentId} 
+                        onChange={(e) => setAgentId(e.target.value)}
+                      />
+                    </div>
+                    <Button onClick={handleGenerateTrace}>
+                      Generate Trace
+                    </Button>
+                  </div>
+                  
+                  {agentId && (
+                    <>
+                      <h3 className="text-sm font-semibold mb-3">Execution Trace for Agent: {agentId}</h3>
+                      <div className="relative overflow-x-auto border rounded-md">
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead>Timestamp</TableHead>
+                              <TableHead>Component</TableHead>
+                              <TableHead>Operation</TableHead>
+                              <TableHead>Duration (ms)</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {traceData.steps.map((step, index) => (
+                              <TableRow key={index}>
+                                <TableCell className="font-mono text-xs">{step.timestamp}</TableCell>
+                                <TableCell>
+                                  <Badge variant="outline" className="font-mono">
+                                    {step.component}
+                                  </Badge>
+                                </TableCell>
+                                <TableCell>{step.operation}</TableCell>
+                                <TableCell>
+                                  <Badge className={step.durationMs > 1000 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}>
+                                    {step.durationMs}ms
+                                  </Badge>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </div>
+                      
+                      <div className="mt-4 p-4 bg-slate-50 rounded-md border">
+                        <div className="flex items-start">
+                          <FileText className="h-4 w-4 text-slate-600 mr-2 mt-0.5" />
+                          <div>
+                            <h4 className="text-sm font-medium">Analysis</h4>
+                            <p className="text-sm text-slate-600 mt-1">
+                              Two LLM Gateway calls are contributing to 84% of the total execution time. 
+                              The calls to <code className="px-1 py-0.5 bg-slate-100 rounded text-xs">/v1/chat/completions</code> are 
+                              taking significantly longer than expected. Consider optimizing prompt length or 
+                              implementing caching strategies.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>
