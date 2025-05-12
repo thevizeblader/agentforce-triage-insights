@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -31,7 +30,8 @@ import {
   AlertTriangle,
   ExternalLink,
   FileText,
-  Activity
+  Activity,
+  Building
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -39,6 +39,7 @@ const AgentforceAnalyzer = () => {
   const [timeRange, setTimeRange] = useState("30");
   const [selectedTab, setSelectedTab] = useState("overview");
   const [agentId, setAgentId] = useState("");
+  const [orgId, setOrgId] = useState("");
 
   // Sample data for server metrics chart
   const serverMetricsData = [
@@ -146,12 +147,26 @@ const AgentforceAnalyzer = () => {
 
       {/* Simplified Filters and Inputs */}
       <div className="bg-white rounded-lg p-6 shadow-sm mb-6 border">
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Time Range</label>
             <div className="flex items-center space-x-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <Input type="text" placeholder="2025-05-06 08:00:00 - 2025-05-06 09:00:00" className="w-full" />
+            </div>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium mb-1">Org ID</label>
+            <div className="flex items-center space-x-2">
+              <Building className="h-4 w-4 text-muted-foreground" />
+              <Input 
+                type="text" 
+                placeholder="Enter organization ID (e.g., 00D63000000Q24VEAS)" 
+                value={orgId} 
+                onChange={(e) => setOrgId(e.target.value)}
+                className="w-full" 
+              />
             </div>
           </div>
         </div>
