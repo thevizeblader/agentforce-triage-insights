@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -136,7 +137,7 @@ const AgentforceAnalyzer = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-7xl">
+    <div className="p-4 max-w-7xl mx-auto">
       {/* Header Section */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">AgentForce Performance Analysis</h1>

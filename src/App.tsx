@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AgentforceAnalyzer from "./pages/AgentforceAnalyzer";
+import { AnalyzerLayout } from "./components/AnalyzerLayout";
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,11 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/agentforce-analyzer" element={<AgentforceAnalyzer />} />
+          <Route path="/agentforce-analyzer" element={
+            <AnalyzerLayout>
+              <AgentforceAnalyzer />
+            </AnalyzerLayout>
+          } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
