@@ -206,40 +206,7 @@ const AgentforceAnalyzer = () => {
             </TabsList>
             
             <TabsContent value="overview">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-medium">Avg. E2E Latency</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">563ms</div>
-                    <p className="text-xs text-muted-foreground">+12% from previous period</p>
-                    <Progress value={56} className="h-1 mt-2" />
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-medium">Database Utilization</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">67%</div>
-                    <p className="text-xs text-muted-foreground">+5% from previous period</p>
-                    <Progress value={67} className="h-1 mt-2" />
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-medium">App Utilization</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">47%</div>
-                    <p className="text-xs text-muted-foreground">-3% from previous period</p>
-                    <Progress value={47} className="h-1 mt-2" />
-                  </CardContent>
-                </Card>
-              </div>
-              
-              {/* Key Takeaways Section */}
+              {/* Key Takeaways Section - Moved above the metrics cards */}
               <Card className="mb-6">
                 <CardHeader>
                   <CardTitle className="flex items-center">
@@ -290,6 +257,40 @@ const AgentforceAnalyzer = () => {
                   </div>
                 </CardContent>
               </Card>
+              
+              {/* Metrics Cards - Now after Key Takeaways */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-medium">Avg. E2E Latency</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">563ms</div>
+                    <p className="text-xs text-muted-foreground">+12% from previous period</p>
+                    <Progress value={56} className="h-1 mt-2" />
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-medium">Database Utilization</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">67%</div>
+                    <p className="text-xs text-muted-foreground">+5% from previous period</p>
+                    <Progress value={67} className="h-1 mt-2" />
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-medium">App Utilization</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">47%</div>
+                    <p className="text-xs text-muted-foreground">-3% from previous period</p>
+                    <Progress value={47} className="h-1 mt-2" />
+                  </CardContent>
+                </Card>
+              </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <Card>
