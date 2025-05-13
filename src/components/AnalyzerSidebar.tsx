@@ -37,6 +37,11 @@ const navSections: NavSection[] = [
         title: "Org Analyzer",
         href: "/org-analyzer"
       },
+      {
+        title: "AgentForce Performance Analysis",
+        href: "/agentforce-analyzer",
+        isActive: true,
+      },
     ],
   },
   {
@@ -87,16 +92,6 @@ const navSections: NavSection[] = [
       },
     ],
   },
-  {
-    title: "AGENTFORCE ANALYZER",
-    children: [
-      {
-        title: "AgentForce Performance Analysis",
-        href: "/agentforce-analyzer",
-        isActive: true,
-      },
-    ],
-  },
 ];
 
 interface AnalyzerSidebarProps {
@@ -105,7 +100,7 @@ interface AnalyzerSidebarProps {
 
 export const AnalyzerSidebar = ({ children }: AnalyzerSidebarProps) => {
   const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({
-    "AGENTFORCE ANALYZER": true, // Initially expanded
+    "ORG ANALYSIS": true, // Initially expanded for Org Analysis
   });
 
   const toggleSection = (title: string) => {

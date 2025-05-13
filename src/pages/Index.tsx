@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Database, Settings, ArrowRight } from "lucide-react";
+import { Database, Settings, ArrowRight, LayoutDashboard, ChartBar } from "lucide-react";
 
 const Index = () => {
   return (
@@ -25,10 +25,34 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
-                <Database className="h-10 w-10 p-2 bg-blue-100 text-blue-600 rounded-lg mb-2" />
-                <CardTitle>AgentForce Triage Insights</CardTitle>
+                <LayoutDashboard className="h-10 w-10 p-2 bg-blue-100 text-blue-600 rounded-lg mb-2" />
+                <CardTitle>Organization Analyzer</CardTitle>
                 <CardDescription>
-                  Analyze and troubleshoot AgentForce performance issues with detailed metrics
+                  Access organization level insights and analytics
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-500">
+                  View comprehensive organization metrics including details, performance trends,
+                  resource utilization, and other critical insights.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Link to="/org-analyzer" className="w-full">
+                  <Button className="w-full">
+                    View Org Insights
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <ChartBar className="h-10 w-10 p-2 bg-purple-100 text-purple-600 rounded-lg mb-2" />
+                <CardTitle>AgentForce Analyzer</CardTitle>
+                <CardDescription>
+                  Analyze and troubleshoot AgentForce performance issues
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -38,7 +62,7 @@ const Index = () => {
                 </p>
               </CardContent>
               <CardFooter>
-                <Link to="/agentforce-analyzer">
+                <Link to="/agentforce-analyzer" className="w-full">
                   <Button className="w-full">
                     View AgentForce Insights
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -49,7 +73,7 @@ const Index = () => {
 
             <Card>
               <CardHeader>
-                <Settings className="h-10 w-10 p-2 bg-purple-100 text-purple-600 rounded-lg mb-2" />
+                <Database className="h-10 w-10 p-2 bg-green-100 text-green-600 rounded-lg mb-2" />
                 <CardTitle>Database Analysis</CardTitle>
                 <CardDescription>
                   Monitor and analyze database performance metrics
@@ -62,10 +86,36 @@ const Index = () => {
                 </p>
               </CardContent>
               <CardFooter>
-                <Button variant="outline" className="w-full">
-                  View Database Analysis
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                <Link to="/org-top-sqls">
+                  <Button variant="outline" className="w-full">
+                    View Database Analysis
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Settings className="h-10 w-10 p-2 bg-amber-100 text-amber-600 rounded-lg mb-2" />
+                <CardTitle>Error Analysis</CardTitle>
+                <CardDescription>
+                  Identify and troubleshoot system errors
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-slate-500">
+                  Analyze error patterns, identify root causes, and get insights into system issues
+                  to improve stability and performance.
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Link to="/error-analyzer">
+                  <Button variant="outline" className="w-full">
+                    View Error Analysis
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </CardFooter>
             </Card>
           </div>
