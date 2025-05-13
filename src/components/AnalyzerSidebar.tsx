@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Sidebar,
   SidebarProvider,
@@ -39,8 +39,7 @@ const navSections: NavSection[] = [
       },
       {
         title: "AgentForce Performance Analysis",
-        href: "/agentforce-analyzer",
-        isActive: true,
+        href: "/agentforce-analyzer"
       },
     ],
   },
@@ -99,6 +98,7 @@ interface AnalyzerSidebarProps {
 }
 
 export const AnalyzerSidebar = ({ children }: AnalyzerSidebarProps) => {
+  const location = useLocation();
   const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({
     "ORG ANALYSIS": true, // Initially expanded for Org Analysis
   });
@@ -145,7 +145,7 @@ export const AnalyzerSidebar = ({ children }: AnalyzerSidebarProps) => {
                         to={child.href}
                         className={cn(
                           "flex w-full items-center gap-2 py-3 px-6 hover:bg-slate-200",
-                          child.isActive ? "bg-slate-200" : ""
+                          location.pathname === child.href ? "bg-slate-200" : ""
                         )}
                       >
                         {child.title}

@@ -29,6 +29,7 @@ const App = () => (
               </div>
             </AnalyzerLayout>
           } />
+          
           <Route path="/agentforce-analyzer" element={
             <AnalyzerLayout>
               <AgentforceAnalyzer />
