@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -36,7 +35,12 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const AgentforceAnalyzer = () => {
+// Add the interface for props
+interface AgentforceAnalyzerProps {
+  embeddedView?: boolean;
+}
+
+const AgentforceAnalyzer = ({ embeddedView = false }: AgentforceAnalyzerProps) => {
   const [timeRange, setTimeRange] = useState("30");
   const [selectedTab, setSelectedTab] = useState("overview");
   const [agentId, setAgentId] = useState("");
@@ -137,14 +141,16 @@ const AgentforceAnalyzer = () => {
   };
 
   return (
-    <div className="p-4 max-w-7xl mx-auto">
-      {/* Header Section */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">AgentForce Performance Analysis</h1>
-        <p className="text-muted-foreground">
-          Performance metrics and insights for troubleshooting AgentForce runtime issues
-        </p>
-      </div>
+    <div className={`${embeddedView ? '' : 'p-4 max-w-7xl mx-auto'}`}>
+      {/* Header Section - conditionally show based on embeddedView */}
+      {!embeddedView && (
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">AgentForce Performance Analysis</h1>
+          <p className="text-muted-foreground">
+            Performance metrics and insights for troubleshooting AgentForce runtime issues
+          </p>
+        </div>
+      )}
 
       {/* Simplified Filters and Inputs */}
       <div className="bg-white rounded-lg p-6 shadow-sm mb-6 border">
@@ -248,13 +254,15 @@ const AgentforceAnalyzer = () => {
                     </div>
                   </div>
                   
-                  <div className="mt-4 pt-4 border-t">
-                    <Link to="/org-analyzer">
-                      <Button variant="outline" className="text-blue-600">
-                        For more detailed insight, run Org Analyzer report <ExternalLink className="h-3.5 w-3.5 ml-1" />
-                      </Button>
-                    </Link>
-                  </div>
+                  {!embeddedView && (
+                    <div className="mt-4 pt-4 border-t">
+                      <Link to="/org-analyzer">
+                        <Button variant="outline" className="text-blue-600">
+                          For more detailed insight, run Org Analyzer report <ExternalLink className="h-3.5 w-3.5 ml-1" />
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
               
