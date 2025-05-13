@@ -28,13 +28,13 @@ const Index = () => {
                 <LayoutDashboard className="h-10 w-10 p-2 bg-blue-100 text-blue-600 rounded-lg mb-2" />
                 <CardTitle>Organization Analyzer</CardTitle>
                 <CardDescription>
-                  Access organization level insights and analytics
+                  Access organization level insights and analytics including AgentForce performance
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-slate-500">
                   View comprehensive organization metrics including details, performance trends,
-                  resource utilization, and other critical insights.
+                  resource utilization, AgentForce insights, and other critical data.
                 </p>
               </CardContent>
               <CardFooter>
@@ -47,29 +47,7 @@ const Index = () => {
               </CardFooter>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <ChartBar className="h-10 w-10 p-2 bg-purple-100 text-purple-600 rounded-lg mb-2" />
-                <CardTitle>AgentForce Analyzer</CardTitle>
-                <CardDescription>
-                  Analyze and troubleshoot AgentForce performance issues
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-slate-500">
-                  Access comprehensive performance metrics for AgentForce, including server utilization, 
-                  latency metrics, gateway callouts, planner execution times, and runtime exceptions.
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link to="/agentforce-analyzer" className="w-full">
-                  <Button className="w-full">
-                    View AgentForce Insights
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
+            {/* Removed the separate AgentForce card since it's now integrated in the Org Analyzer */}
 
             <Card>
               <CardHeader>

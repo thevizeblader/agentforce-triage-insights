@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -36,10 +35,6 @@ const navSections: NavSection[] = [
       {
         title: "Org Analyzer",
         href: "/org-analyzer"
-      },
-      {
-        title: "AgentForce Performance Analysis",
-        href: "/agentforce-analyzer"
       },
     ],
   },

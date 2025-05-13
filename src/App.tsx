@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AgentforceAnalyzer from "./pages/AgentforceAnalyzer";
+import OrgAnalyzer from "./pages/OrgAnalyzer";
 import { AnalyzerLayout } from "./components/AnalyzerLayout";
 
 const queryClient = new QueryClient();
@@ -23,13 +23,11 @@ const App = () => (
           {/* Org Analysis Routes */}
           <Route path="/org-analyzer" element={
             <AnalyzerLayout>
-              <div className="p-6">
-                <h1 className="text-2xl font-bold mb-4">Organization Analyzer</h1>
-                <p>Organization analysis content will appear here.</p>
-              </div>
+              <OrgAnalyzer />
             </AnalyzerLayout>
           } />
           
+          {/* Keep the original AgentForce route for direct access but hide from menu */}
           <Route path="/agentforce-analyzer" element={
             <AnalyzerLayout>
               <AgentforceAnalyzer />
