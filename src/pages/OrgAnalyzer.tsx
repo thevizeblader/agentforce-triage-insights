@@ -5,41 +5,69 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Search, Clock } from "lucide-react";
 
 const OrgAnalyzer = () => {
   const [activeTab, setActiveTab] = useState("details");
   const [orgId, setOrgId] = useState("ORG-12345");
-  const [timeRange, setTimeRange] = useState("Last 24 hours");
+  const [timeRange, setTimeRange] = useState("2025-05-06 08:00:00 - 2025-05-06 09:00:00");
   
   return <div className="flex flex-col gap-6 p-6">
       {/* Organization Analyzer Header */}
       <section>
         <h1 className="text-2xl font-bold mb-4">Org Analyzer</h1>
         
-        {/* Search and filter controls - Moved from AgentForce tab */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          <div className="flex-1">
+        {/* Tabs Navigation */}
+        <div className="border-b mb-6">
+          <TabsList className="h-12 px-4 w-full justify-start">
+            <TabsTrigger value="details" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 rounded-none">
+              Org Details
+            </TabsTrigger>
+            <TabsTrigger value="insights" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 rounded-none">
+              Insights
+            </TabsTrigger>
+            <TabsTrigger value="agentforce" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 rounded-none">
+              AgentForce Insights
+            </TabsTrigger>
+            <TabsTrigger value="sqls" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 rounded-none">
+              Top SQLs
+            </TabsTrigger>
+            <TabsTrigger value="platform" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 rounded-none">
+              Platform SQLs
+            </TabsTrigger>
+          </TabsList>
+        </div>
+        
+        {/* Search and filter controls in new layout matching the image */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 bg-white p-6 rounded-lg shadow-sm border">
+          <div>
+            <label className="block text-sm font-medium mb-2">Time Range</label>
             <div className="relative">
+              <Clock className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
               <Input 
                 type="text"
-                placeholder="Enter Org ID" 
-                value={orgId}
-                onChange={(e) => setOrgId(e.target.value)}
+                placeholder="Time Range" 
+                value={timeRange}
+                onChange={(e) => setTimeRange(e.target.value)}
                 className="w-full pl-10"
               />
-              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
             </div>
           </div>
-          <div className="flex gap-4">
-            <Input
-              type="text" 
-              placeholder="Time Range"
-              value={timeRange}
-              onChange={(e) => setTimeRange(e.target.value)}
-              className="w-40"
-            />
-            <Button>Apply</Button>
+          <div>
+            <label className="block text-sm font-medium mb-2">Org ID</label>
+            <div className="flex gap-4">
+              <div className="relative flex-grow">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                <Input 
+                  type="text"
+                  placeholder="Enter organization ID (e.g., 00DE30000000Q24VEAS)" 
+                  value={orgId}
+                  onChange={(e) => setOrgId(e.target.value)}
+                  className="w-full pl-10"
+                />
+              </div>
+              <Button className="bg-blue-500 hover:bg-blue-600">Submit</Button>
+            </div>
           </div>
         </div>
         
@@ -79,26 +107,6 @@ const OrgAnalyzer = () => {
       {/* Analysis Tabs Section */}
       <section className="bg-white rounded-lg shadow-sm border">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <div className="border-b">
-            <TabsList className="h-12 px-4 w-full justify-start">
-              <TabsTrigger value="details" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 rounded-none">
-                Org Details
-              </TabsTrigger>
-              <TabsTrigger value="insights" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 rounded-none">
-                Insights
-              </TabsTrigger>
-              <TabsTrigger value="agentforce" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 rounded-none">
-                AgentForce Insights
-              </TabsTrigger>
-              <TabsTrigger value="sqls" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 rounded-none">
-                Top SQLs
-              </TabsTrigger>
-              <TabsTrigger value="platform" className="data-[state=active]:border-b-2 data-[state=active]:border-blue-500 rounded-none">
-                Platform SQLs
-              </TabsTrigger>
-            </TabsList>
-          </div>
-
           {/* Org Details Tab */}
           <TabsContent value="details" className="p-6">
             <div>
@@ -183,7 +191,7 @@ const OrgAnalyzer = () => {
             </Card>
           </TabsContent>
 
-          {/* AgentForce Insights Tab - Removed the input fields */}
+          {/* AgentForce Insights Tab */}
           <TabsContent value="agentforce" className="p-0">
             <AgentforceAnalyzer embeddedView={true} />
           </TabsContent>
