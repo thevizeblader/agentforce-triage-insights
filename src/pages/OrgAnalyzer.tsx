@@ -1,19 +1,53 @@
+
 import React, { useState } from "react";
 import AgentforceAnalyzer from "./AgentforceAnalyzer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Search } from "lucide-react";
+
 const OrgAnalyzer = () => {
   const [activeTab, setActiveTab] = useState("details");
+  const [orgId, setOrgId] = useState("ORG-12345");
+  const [timeRange, setTimeRange] = useState("Last 24 hours");
+  
   return <div className="flex flex-col gap-6 p-6">
       {/* Organization Analyzer Header */}
       <section>
         <h1 className="text-2xl font-bold mb-4">Org Analyzer</h1>
         
+        {/* Search and filter controls - Moved from AgentForce tab */}
+        <div className="flex flex-col md:flex-row gap-4 mb-6">
+          <div className="flex-1">
+            <div className="relative">
+              <Input 
+                type="text"
+                placeholder="Enter Org ID" 
+                value={orgId}
+                onChange={(e) => setOrgId(e.target.value)}
+                className="w-full pl-10"
+              />
+              <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <Input
+              type="text" 
+              placeholder="Time Range"
+              value={timeRange}
+              onChange={(e) => setTimeRange(e.target.value)}
+              className="w-40"
+            />
+            <Button>Apply</Button>
+          </div>
+        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow-sm border">
             <h3 className="font-medium text-lg mb-2">Org Details</h3>
             <div className="text-sm text-gray-600 space-y-2">
-              <p><span className="font-medium">Org ID:</span> ORG-12345</p>
+              <p><span className="font-medium">Org ID:</span> {orgId}</p>
               <p><span className="font-medium">Name:</span> Acme Corporation</p>
               <p><span className="font-medium">Instance:</span> NA99</p>
               <p><span className="font-medium">Status:</span> <span className="text-green-600 font-medium">Active</span></p>
@@ -149,7 +183,7 @@ const OrgAnalyzer = () => {
             </Card>
           </TabsContent>
 
-          {/* AgentForce Insights Tab */}
+          {/* AgentForce Insights Tab - Removed the input fields */}
           <TabsContent value="agentforce" className="p-0">
             <AgentforceAnalyzer embeddedView={true} />
           </TabsContent>
