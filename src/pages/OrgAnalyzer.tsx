@@ -1,21 +1,17 @@
-
 import React, { useState } from "react";
 import AgentforceAnalyzer from "./AgentforceAnalyzer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
 const OrgAnalyzer = () => {
   const [activeTab, setActiveTab] = useState("details");
-
-  return (
-    <div className="flex flex-col gap-6 p-6">
+  return <div className="flex flex-col gap-6 p-6">
       {/* Organization Analyzer Header */}
       <section>
-        <h1 className="text-2xl font-bold mb-4">Organization Analyzer</h1>
+        <h1 className="text-2xl font-bold mb-4">Org Analyzer</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow-sm border">
-            <h3 className="font-medium text-lg mb-2">Organization Details</h3>
+            <h3 className="font-medium text-lg mb-2">Org Details</h3>
             <div className="text-sm text-gray-600 space-y-2">
               <p><span className="font-medium">Org ID:</span> ORG-12345</p>
               <p><span className="font-medium">Name:</span> Acme Corporation</p>
@@ -72,7 +68,7 @@ const OrgAnalyzer = () => {
           {/* Org Details Tab */}
           <TabsContent value="details" className="p-6">
             <div>
-              <h2 className="text-xl font-semibold mb-4">Organization Details</h2>
+              <h2 className="text-xl font-semibold mb-4">Org Details</h2>
               
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
@@ -187,8 +183,6 @@ const OrgAnalyzer = () => {
           </TabsContent>
         </Tabs>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default OrgAnalyzer;
