@@ -267,7 +267,7 @@ const AgentforceAnalyzer = ({
   const checkAgentForceId = () => {
     // Mock function that would typically make an API call to check the agent type
     console.log("Checking AgentForce ID:", agentForceId);
-    
+
     // Simulate an API call with a timeout
     setTimeout(() => {
       // For demo purposes, determine agent type based on ID format
@@ -300,32 +300,20 @@ const AgentforceAnalyzer = ({
             <div className="flex gap-2">
               <div className="relative flex-grow">
                 <User className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
-                <Input 
-                  id="agentforce-id"
-                  type="text" 
-                  placeholder="Enter AgentForce ID (e.g., AF123456789)" 
-                  value={agentForceId} 
-                  onChange={(e) => setAgentForceId(e.target.value)}
-                  className="pl-10 w-full border-purple-100 focus:border-purple-300 focus:ring-purple-200"
-                />
+                <Input id="agentforce-id" type="text" placeholder="Enter AgentForce ID (e.g., AF123456789)" value={agentForceId} onChange={e => setAgentForceId(e.target.value)} className="pl-10 w-full border-purple-100 focus:border-purple-300 focus:ring-purple-200" />
               </div>
-              <Button 
-                onClick={checkAgentForceId}
-                className="bg-purple-600 hover:bg-purple-700"
-              >
+              <Button onClick={checkAgentForceId} className="bg-blue-600 hover:bg-blue-500">
                 Check
               </Button>
             </div>
           </div>
           
-          {agentType && (
-            <div className="bg-purple-50 px-4 py-2 rounded-md border border-purple-100 flex items-center">
-              <span className="text-sm font-medium text-purple-800 mr-2">Agent Type:</span>
+          {agentType && <div className="px-4 py-2 rounded-md border border-purple-100 flex items-center bg-zinc-200">
+              <span className="text-sm font-medium mr-2 text-stone-950">Agent Type:</span>
               <Badge className={`${agentType.includes('Custom') ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
                 {agentType}
               </Badge>
-            </div>
-          )}
+            </div>}
         </div>
       </div>
 
