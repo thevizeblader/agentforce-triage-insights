@@ -9,8 +9,9 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from "recharts";
-import { Check, Clock, Database, Info, Search, ArrowRight, AlertTriangle, ExternalLink, FileText, Activity, Building } from "lucide-react";
+import { Check, Clock, Database, Info, Search, ArrowRight, AlertTriangle, ExternalLink, FileText, Activity, Building, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Label } from "@/components/ui/label";
 
 // Add the interface for props
 interface AgentforceAnalyzerProps {
@@ -23,6 +24,8 @@ const AgentforceAnalyzer = ({
   const [selectedTab, setSelectedTab] = useState("overview");
   const [agentId, setAgentId] = useState("");
   const [orgId, setOrgId] = useState("");
+  const [agentForceId, setAgentForceId] = useState("");
+  const [agentType, setAgentType] = useState<string | null>(null);
 
   // Sample data for server metrics chart
   const serverMetricsData = [{
@@ -261,6 +264,23 @@ const AgentforceAnalyzer = ({
     console.log("Generating trace for agent ID:", agentId);
     // For now, we'll just show the sample trace data that's already defined
   };
+  const checkAgentForceId = () => {
+    // Mock function that would typically make an API call to check the agent type
+    console.log("Checking AgentForce ID:", agentForceId);
+    
+    // Simulate an API call with a timeout
+    setTimeout(() => {
+      // For demo purposes, determine agent type based on ID format
+      // In a real implementation, this would come from an actual API response
+      if (agentForceId.startsWith("AF")) {
+        setAgentType("Custom-built AgentForce Agent");
+      } else if (agentForceId.startsWith("SF")) {
+        setAgentType("Standard Salesforce Agent");
+      } else {
+        setAgentType("Unknown Agent Type");
+      }
+    }, 500);
+  };
   return <div className={`${embeddedView ? '' : 'p-4 max-w-7xl mx-auto'}`}>
       {/* Header Section - conditionally show based on embeddedView */}
       {!embeddedView && <div className="mb-8">
@@ -270,8 +290,44 @@ const AgentforceAnalyzer = ({
           </p>
         </div>}
 
-      {/* Simplified Filters and Inputs */}
-      
+      {/* AgentForce ID Input - Add this new section for the AgentForce ID input */}
+      <div className="bg-white rounded-lg shadow-sm mb-6 border p-4">
+        <div className="flex flex-col md:flex-row md:items-end gap-4">
+          <div className="flex-1">
+            <Label htmlFor="agentforce-id" className="text-sm font-medium mb-2 block">
+              AgentForce ID
+            </Label>
+            <div className="flex gap-2">
+              <div className="relative flex-grow">
+                <User className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
+                <Input 
+                  id="agentforce-id"
+                  type="text" 
+                  placeholder="Enter AgentForce ID (e.g., AF123456789)" 
+                  value={agentForceId} 
+                  onChange={(e) => setAgentForceId(e.target.value)}
+                  className="pl-10 w-full border-purple-100 focus:border-purple-300 focus:ring-purple-200"
+                />
+              </div>
+              <Button 
+                onClick={checkAgentForceId}
+                className="bg-purple-600 hover:bg-purple-700"
+              >
+                Check
+              </Button>
+            </div>
+          </div>
+          
+          {agentType && (
+            <div className="bg-purple-50 px-4 py-2 rounded-md border border-purple-100 flex items-center">
+              <span className="text-sm font-medium text-purple-800 mr-2">Agent Type:</span>
+              <Badge className={`${agentType.includes('Custom') ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
+                {agentType}
+              </Badge>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* Results Section */}
       <div className="bg-white rounded-lg shadow-sm mb-6 border">
